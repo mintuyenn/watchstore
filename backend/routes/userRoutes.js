@@ -34,7 +34,8 @@ router
 
 router.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+  { session: false }
 );
 
 // 2. Route Callback (Google sẽ gọi lại vào đây)
