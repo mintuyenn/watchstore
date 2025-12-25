@@ -27,7 +27,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://watchstoree-production.up.railway.app"],
     credentials: true,
   })
 );
