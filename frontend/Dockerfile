@@ -6,6 +6,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+
+# THÊM 2 DÒNG NÀY VÀO TRƯỚC LỆNH BUILD
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
 # -- Giai đoạn 2: Chạy Nginx --
