@@ -10,7 +10,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/api/users/auth/google/callback", // Route backend sẽ tạo ở bước sau
+      callbackURL: `${process.env.BACKEND_URL}/api/users/auth/google/callback`, // Route backend sẽ tạo ở bước sau
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
