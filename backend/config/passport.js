@@ -13,6 +13,8 @@ passport.use(
       callbackURL: `${process.env.BACKEND_URL}/api/users/auth/google/callback`, // Route backend sẽ tạo ở bước sau
 
       proxy: true,
+      // 👇 THÊM DÒNG NÀY VÀO ĐÂY (Cấu hình toàn cục)
+      scope: ["profile", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

@@ -36,10 +36,7 @@ router
 // --- 1. Route bắt đầu đăng nhập Google (ĐÃ SỬA LỖI) ---
 router.get(
   "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    session: false, // Đã gộp vào trong
-  })
+  passport.authenticate("google", { session: false }) // Không cần scope ở đây nữa
 );
 
 // --- 2. Route Callback (ĐÃ SỬA REDIRECT CHO CHUẨN) ---
