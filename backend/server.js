@@ -23,11 +23,16 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
 connectDB();
 const app = express();
+// 👇 THÊM DÒNG NÀY (Bắt buộc khi deploy Railway/Heroku/Vercel)
+app.set("trust proxy", 1);
 
 // Middlewares
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://watchstoree-production.up.railway.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://watchstoree-production.up.railway.app",
+    ],
     credentials: true,
   })
 );
