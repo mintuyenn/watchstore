@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth"; // Đảm bảo đường dẫn đúng
 import { apiGetProfile, apiUpdateProfile } from "../services/auth";
 import {
   FaUser,
@@ -14,7 +14,8 @@ import {
 } from "react-icons/fa";
 
 export default function ProfilePage() {
-  const { user, login } = useAuth();
+  // Lấy thêm isLoading từ AuthContext
+  const { user, login, isLoading } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -25,41 +26,45 @@ export default function ProfilePage() {
     confirmPassword: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false); // Đổi tên để tránh trùng với isLoading của Auth
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // --- Logic giữ nguyên ---
+  // Logic load data vào form
   useEffect(() => {
     const loadProfile = async () => {
-      if (user && !formData.email) {
-        try {
-          const profileData = await apiGetProfile();
-          setFormData({
-            fullName: profileData.fullName || "",
-            email: profileData.email || "",
-            phone: profileData.phone || "",
-            address: profileData.address || "",
-            password: "",
-            confirmPassword: "",
-            createdAt: profileData.createdAt || "",
-          });
-        } catch (err) {
-          console.error("Lỗi tải profile:", err);
-          setError("Không thể tải thông tin tài khoản.");
+      // Chỉ chạy khi đã xác định được user (không còn loading)
+      if (!isLoading) {
+        if (user && !formData.email) {
+          try {
+            const profileData = await apiGetProfile();
+            setFormData({
+              fullName: profileData.fullName || "",
+              email: profileData.email || "",
+              phone: profileData.phone || "",
+              address: profileData.address || "",
+              password: "",
+              confirmPassword: "",
+              createdAt: profileData.createdAt || "",
+            });
+          } catch (err) {
+            console.error("Lỗi tải profile:", err);
+            setError("Không thể tải thông tin tài khoản.");
+          }
+        } else if (user) {
+          // Fallback nếu API lỗi hoặc dùng data từ context
+          setFormData((prev) => ({
+            ...prev,
+            fullName: user.fullName || "",
+            email: user.email || "",
+            phone: user.phone || "",
+            address: user.address || "",
+          }));
         }
-      } else if (user) {
-        setFormData((prev) => ({
-          ...prev,
-          fullName: user.fullName || "",
-          email: user.email || "",
-          phone: user.phone || "",
-          address: user.address || "",
-        }));
       }
     };
     loadProfile();
-  }, [user]);
+  }, [user, isLoading]); // Thêm isLoading vào dependency
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,7 +87,7 @@ export default function ProfilePage() {
       return;
     }
 
-    setLoading(true);
+    setSubmitting(true);
     try {
       const updateData = {
         fullName: formData.fullName,
@@ -102,10 +107,58 @@ export default function ProfilePage() {
       console.error("Lỗi cập nhật profile:", err);
       setError(err.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
+  // --- QUAN TRỌNG: Màn hình chờ khi đang check login ---
+  if (isLoading) {
+    return (
+      <div className="min-h-screen w-full bg-[#0B0F14] flex items-center justify-center">
+        <div className="text-[#C9A24D] text-lg font-bold flex items-center gap-3 animate-pulse">
+          {/* SVG Loading Spinner */}
+          <svg
+            className="animate-spin h-8 w-8"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          Đang tải thông tin...
+        </div>
+      </div>
+    );
+  }
+
+  // --- Nếu check xong mà không có user (chưa đăng nhập) ---
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-[#0B0F14] text-white flex flex-col items-center justify-center pt-20">
+        <div className="text-xl mb-4">Bạn chưa đăng nhập.</div>
+        <a
+          href="/login"
+          className="px-6 py-2 bg-[#C9A24D] text-black font-bold rounded hover:bg-white transition"
+        >
+          Đăng nhập ngay
+        </a>
+      </div>
+    );
+  }
+
+  // --- Render chính (giữ nguyên UI cũ) ---
   return (
     <div className="min-h-screen w-full bg-[#0B0F14] text-white pt-20 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -143,7 +196,6 @@ export default function ProfilePage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                {/* Edit Avatar Button (Visual only for now) */}
                 <button className="absolute bottom-0 right-0 bg-[#C9A24D] text-black p-2 rounded-full shadow-lg hover:bg-white transition-colors">
                   <FaCamera size={14} />
                 </button>
@@ -193,7 +245,7 @@ export default function ProfilePage() {
                       value={formData.email}
                       onChange={handleChange}
                       icon={<FaEnvelope />}
-                      disabled={true} // Thường email không cho sửa trực tiếp
+                      disabled={true}
                     />
                   </div>
 
@@ -249,10 +301,10 @@ export default function ProfilePage() {
                 <div className="pt-6 flex justify-end">
                   <button
                     type="submit"
-                    disabled={loading}
+                    disabled={submitting}
                     className="flex items-center justify-center gap-2 py-3 px-8 bg-[#C9A24D] text-[#0B0F14] font-bold uppercase tracking-wider text-sm rounded-sm hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(201,162,77,0.4)] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {loading ? (
+                    {submitting ? (
                       <>Đang xử lý...</>
                     ) : (
                       <>
@@ -270,7 +322,7 @@ export default function ProfilePage() {
   );
 }
 
-// Reusable Dark Mode Input Component
+// Reusable Dark Mode Input Component (Giữ nguyên)
 const InputGroup = ({
   label,
   name,
