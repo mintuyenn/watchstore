@@ -8,10 +8,10 @@ import {
   deleteProduct,
   createProductReview,
 } from "../controllers/productController.js";
-import { protect, admin } from "../middleware/authMiddleware.js"; // Import middleware
+import { protect, admin, customer } from "../middleware/authMiddleware.js"; // Import middleware
 
 router.route("/").get(getProducts).post(protect, admin, createProduct); // Bảo vệ route POST
-router.route("/:id/reviews").post(protect, createProductReview);
+router.route("/:id/reviews").post(protect, customer, createProductReview);
 
 router
   .route("/:id")

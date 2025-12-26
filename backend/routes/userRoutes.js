@@ -11,7 +11,7 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/userController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, admin, customer } from "../middleware/authMiddleware.js";
 import passport from "passport";
 import generateToken from "../utils/generateToken.js";
 
@@ -22,8 +22,8 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(protect, logoutUser);
 router
   .route("/profile")
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .get(protect, customer, getUserProfile)
+  .put(protect, customer, updateUserProfile);
 
 router.route("/").get(protect, admin, getUsers);
 

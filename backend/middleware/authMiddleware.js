@@ -37,5 +37,14 @@ const admin = (req, res, next) => {
     throw new Error("Không có quyền Admin");
   }
 };
+const customer = (req, res, next) => {
+  // Kiểm tra role là 'customer' (dùng toLowerCase cho chắc chắn)
+  if (req.user && req.user.role && req.user.role.toLowerCase() === "customer") {
+    next();
+  } else {
+    res.status(403); // 403 Forbidden
+    throw new Error("Chức năng chỉ dành cho Khách hàng");
+  }
+};
 
-export { protect, admin };
+export { protect, admin, customer };
