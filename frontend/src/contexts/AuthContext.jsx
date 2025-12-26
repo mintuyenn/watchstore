@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   // loading = true để chờ check session với server xong mới render UI
   const [loading, setLoading] = useState(true);
+  const BACKEND_URL = import.meta.env.VITE_API_URL;
 
   // 1. CHECK SESSION KHI RELOAD TRANG
   useEffect(() => {
@@ -19,8 +20,9 @@ export const AuthProvider = ({ children }) => {
       try {
         // Gọi endpoint profile. Vì cookie tự động gửi kèm,
         // nếu cookie hợp lệ backend sẽ trả về user info.
-        const res = await fetch("/api/users/profile");
-
+        const res = await fetch(`${BACKEND_URL}/api/users/profile`, {
+          credentials: "include",
+        });
         if (res.ok) {
           const data = await res.json();
           setUser(data);
@@ -46,7 +48,13 @@ export const AuthProvider = ({ children }) => {
   // 3. LOGOUT (Gọi Backend xóa Cookie + Xóa State)
   const logout = async () => {
     try {
-      await fetch("/api/users/logout", { method: "POST" });
+      await fetch(
+        `${BACKEND_URL}/api/users/logout`,
+        {
+          credentials: "include",
+        },
+        { method: "POST" }
+      );
       setUser(null);
       // Nếu muốn chuyển trang thì xử lý ở component gọi hàm này
     } catch (error) {
