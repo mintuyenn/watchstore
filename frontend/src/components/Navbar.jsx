@@ -229,8 +229,11 @@ const Navbar = () => {
 
               {/* Links */}
               <div className="flex flex-col space-y-2">
-                <MobileNavLink to="/" onClick={closeMobileMenu}>
-                  Trang chủ
+                <MobileNavLink
+                  to="/products?brand=Seiko"
+                  onClick={closeMobileMenu}
+                >
+                  Seiko
                 </MobileNavLink>
                 <MobileNavLink
                   to="/products?brand=Rolex"
@@ -245,13 +248,13 @@ const Navbar = () => {
                   Omega
                 </MobileNavLink>
                 <MobileNavLink
-                  to="/products?brand=Hublot"
+                  to="/products?brand=Casio"
                   onClick={closeMobileMenu}
                 >
-                  Hublot
+                  Casio
                 </MobileNavLink>
                 <MobileNavLink to="/products" onClick={closeMobileMenu}>
-                  Tất cả sản phẩm
+                  BỘ SƯU TẬP
                 </MobileNavLink>
               </div>
 
