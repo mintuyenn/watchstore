@@ -11,8 +11,8 @@ const generateToken = (res, userId) => {
   // 2. Gửi token qua Cookie
   res.cookie("jwt", token, {
     httpOnly: true, // Chỉ server được đọc
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày (tính bằng mili giây)
   });
 };

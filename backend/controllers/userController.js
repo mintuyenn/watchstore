@@ -65,8 +65,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
     expires: new Date(0),
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict",
+    secure: true,
+    sameSite: "none",
   });
   res.status(200).json({ message: "Đăng xuất thành công" });
 });
