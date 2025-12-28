@@ -22,8 +22,8 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(protect, logoutUser);
 router
   .route("/profile")
-  .get(protect, customer, getUserProfile)
-  .put(protect, customer, updateUserProfile);
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 
 router.route("/").get(protect, admin, getUsers);
 
