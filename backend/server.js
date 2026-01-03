@@ -32,6 +32,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://watchstoree-production.up.railway.app",
+      "https://watchstore-seven.vercel.app",
     ],
     credentials: true,
   })
