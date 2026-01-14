@@ -38,9 +38,9 @@ const ContactPage = () => {
             title="Địa chỉ cửa hàng"
             content={
               <>
-                112 Hồ Văn Huê, Phường 9,
+                123 Lê Lợi, Phường Bến Thành,
                 <br />
-                Quận Phú Nhuận, TP. Hồ Chí Minh
+                Quận 1, TP.HCM
               </>
             }
           />
