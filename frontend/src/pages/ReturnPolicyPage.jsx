@@ -71,7 +71,7 @@ export default function ReturnPolicyPage() {
             <p className="text-sm">
               Vui lòng liên hệ hotline{" "}
               <span className="text-[#C9A24D] font-mono font-bold">
-                0364.389.055
+                0336887995
               </span>{" "}
               hoặc nhắn tin qua Fanpage để nhân viên xác nhận tình trạng và
               hướng dẫn gửi hàng về kho.

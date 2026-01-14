@@ -50,10 +50,10 @@ const ContactPage = () => {
             content={
               <>
                 Mua hàng:{" "}
-                <span className="text-white font-mono">0862347170</span>
+                <span className="text-white font-mono">0336887995</span>
                 <br />
                 Khiếu nại:{" "}
-                <span className="text-white font-mono">0862347170</span>
+                <span className="text-white font-mono">0336887995</span>
               </>
             }
           />
@@ -93,7 +93,7 @@ const ContactPage = () => {
               </h3>
               <div className="space-y-4">
                 <SocialLink
-                  href="https://www.facebook.com/tuyen.cao.993194"
+                  href=""
                   icon={<Facebook size={20} />}
                   text="Fanpage WatchStore"
                 />
@@ -103,7 +103,7 @@ const ContactPage = () => {
                   text="@watchstore.official"
                 />
                 <SocialLink
-                  href="https://zalo.me/0862347170"
+                  href="https://zalo.me/0336887995"
                   icon={<MessageCircle size={20} />}
                   text="Zalo Official"
                 />
@@ -140,7 +140,7 @@ const ContactPage = () => {
 
             <iframe
               title="Google Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4209.990830575453!2d106.67386677530946!3d10.802217058716936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528d8085391bd%3A0x825968e7414e5bff!2zMTEyIEjhu5MgVsSDbiBIdcOqLCBQaMaw4budbmcgOSwgUGjDuiBOaHXhuq1uLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e1!3m2!1svi!2s!4v1766627294714!5m2!1svi!2s"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.8102884851874!2d106.63066308132308!3d10.749099732381218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ffaeb1a0f7d%3A0x463ba93fe910c917!2zU2hvcCDEkOG7k25nIEjhu5MgTmFtIE7hu68gQ2jDrW5oIEjDo25n!5e0!3m2!1svi!2s!4v1768392128747!5m2!1svi!2s"
               width="100%"
               height="100%"
               style={{

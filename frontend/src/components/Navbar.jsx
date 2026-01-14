@@ -56,11 +56,11 @@ const Navbar = () => {
             <span className="flex items-center gap-2 hover:text-white transition cursor-default">
               <Phone size={12} className="text-[#C9A24D]" />
               Hotline:{" "}
-              <span className="font-bold text-white">0862.347.170</span>
+              <span className="font-bold text-white">0336887995</span>
             </span>
             <span className="flex items-center gap-2 hover:text-white transition cursor-default">
               <MapPin size={12} className="text-[#C9A24D]" />
-              Store: 112 Hồ Văn Huê, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh
+              Store: 123 Lê Lợi, P. Bến Thành, Q.1, TP.HCM
             </span>
           </div>
           <div className="flex gap-6">
