@@ -97,7 +97,7 @@ const createVnpayPaymentUrl = asyncHandler(async (req, res) => {
         signDataString.push(
           encodeURIComponent(key) +
             "=" +
-            encodeURIComponent(value).replace(/%20/g, "+")
+            encodeURIComponent(value).replace(/%20/g, "+"),
         );
       }
     }
@@ -138,7 +138,7 @@ const vnpayReturn = asyncHandler(async (req, res) => {
         signDataString.push(
           encodeURIComponent(key) +
             "=" +
-            encodeURIComponent(value).replace(/%20/g, "+")
+            encodeURIComponent(value).replace(/%20/g, "+"),
         );
       }
     }
@@ -154,7 +154,7 @@ const vnpayReturn = asyncHandler(async (req, res) => {
   const responseCode = vnp_Params["vnp_ResponseCode"];
 
   // Frontend URL
-  const frontendUrl = "http://localhost:5173";
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
 
   // Debug log
   console.log("--- VNPAY RETURN ---");
@@ -179,27 +179,27 @@ const vnpayReturn = asyncHandler(async (req, res) => {
             await order.save();
           }
           return res.redirect(
-            `${frontendUrl}/order-success?orderId=${orderId}&status=success`
+            `${frontendUrl}/order-success?orderId=${orderId}&status=success`,
           );
         } else {
           return res.redirect(
-            `${frontendUrl}/cart?status=fail&reason=order_not_found`
+            `${frontendUrl}/cart?status=fail&reason=order_not_found`,
           );
         }
       } catch (error) {
         return res.redirect(
-          `${frontendUrl}/cart?status=fail&reason=server_error`
+          `${frontendUrl}/cart?status=fail&reason=server_error`,
         );
       }
     } else {
       return res.redirect(
-        `${frontendUrl}/cart?status=fail&code=${responseCode}`
+        `${frontendUrl}/cart?status=fail&code=${responseCode}`,
       );
     }
   } else {
     console.error("⛔ SAI CHỮ KÝ!");
     return res.redirect(
-      `${frontendUrl}/cart?status=fail&reason=invalid_signature`
+      `${frontendUrl}/cart?status=fail&reason=invalid_signature`,
     );
   }
 });
